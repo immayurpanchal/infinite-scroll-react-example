@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import './App.css';
+import useDebounceQuery from './useDebounce';
 import usePhotos from './usePhotos';
 
 const App = () => {
@@ -7,7 +8,6 @@ const App = () => {
 	const [pageNumber, setPageNumber] = useState(1);
 	const [query, setQuery] = useState('office');
 	const [count, setCount] = useState(0);
-	const { photos, loading, error } = usePhotos(query, pageNumber);
 
 	// Step 2 - Create observer Ref.
 	const observer = useRef();
@@ -27,6 +27,10 @@ const App = () => {
 		// Step 4 - If node is found, add it to the observer
 		if (node) observer.current.observe(node);
 	}, []);
+
+	const queryDelayed = useDebounceQuery(query, 500);
+
+	const { photos, loading, error } = usePhotos(queryDelayed, pageNumber);
 
 	return (
 		<div className='App'>
