@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import './App.css';
 import useDebounceQuery from './useDebounce';
 import usePhotos from './usePhotos';
